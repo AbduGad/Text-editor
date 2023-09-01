@@ -1,0 +1,5 @@
+Handle:
+	if user enters 2 arguments after the excutable 
+	negarab el fopen 3shan ahmed z3lan ( 5las grbnaha ) 
+	vim doesnt open a new window, it opens in the terminal
+	is there a way to read the lines on the screen as input to a buffer or the newly created file
