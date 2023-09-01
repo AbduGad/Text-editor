@@ -66,16 +66,26 @@ int main(int argc, char **argv) /* ./vi ELFile */
 			break;
 
 		case KEY_DOWN:
-			move(++Currenty, ++Currentx);
+			move(++Currenty, Currentx);
 			refresh();
 			break;
 
 		case KEY_BACKSPACE:
 			//printw("w");
+			if (Currentx == 0)
+			{
+				move(--Currenty, 0);
+				break;
+			}
 			move(Currenty, --Currentx);
 			delch();
 			break;
 			
+		case '\n':
+			move(++Currenty, 0);
+			refresh();
+			break;
+
 		default:
 			insch(ch);
 			move(Currenty, ++Currentx);
