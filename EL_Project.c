@@ -4,12 +4,12 @@
 int main(int argc, char **argv) /* ./vi ELFile */
 {
 	WINDOW *my_window;
-	int file, TempStringIndex = 0, ch;
+	int file, TempStringIndex = 0, ch, CurrentArrayIndex;
 	FILE *fp;
 	int WindowHieght, WindowWidth, Currenty, Currentx;
 	char *TempString, *PrevLine, tmp[2], *Holder;
 	size_t PrevLineSize;
-	array *Buffer = NULL;
+	array *BufferHead = NULL;
 	array *BufferPointer = NULL;
 	int CurserPosY = 0;
 
@@ -29,7 +29,7 @@ int main(int argc, char **argv) /* ./vi ELFile */
 	raw();
 	keypad(stdscr, TRUE);
 	noecho();
-	//CreateList(&Buffer);
+	//CreateList(&BufferHead);
 
 	while (ch = getch())   /* scanw("%s", ) */
 	{
@@ -39,7 +39,7 @@ int main(int argc, char **argv) /* ./vi ELFile */
 		{
 		case KEY_F(2):
 			free(TempString);
-			free_listint2(&Buffer);
+			free_listint2(&BufferHead);
 			printw("F2 pressed");
 			refresh();
 			endwin();
@@ -88,9 +88,16 @@ int main(int argc, char **argv) /* ./vi ELFile */
 				if (Currenty == 0)
 					break;
 				CurserPosY--;
-				move(--Currenty, 0);
+				move(--Currenty, BufferPointer->LineLen);
 				mvprintw(WindowHieght-2, WindowWidth - 30, "Curser position: %d  ", CurserPosY);
-				move(Currenty, Currentx);
+				move(Currenty, BufferPointer->LineLen);
+				CurrentArrayIndex -= 1;
+				BufferPointer = BufferHead;
+				while (BufferPointer->Index != CurrentArrayIndex && CurrentArrayIndex >= 0)
+				{
+					BufferPointer = BufferPointer->Next;
+				}
+				//CurrentArrayIndex = BufferPointer->Index;
 				/* Handle deleting the previous line */
 				break;
 			}
@@ -105,8 +112,9 @@ int main(int argc, char **argv) /* ./vi ELFile */
 			
 		case '\n':
 			/*when thers an input of a newline we will create a new node in the list*/
-			// Buffer->Str = strdup(TempString);
-			BufferPointer = add_node_end(&Buffer, TempString);
+			// BufferHead->Str = strdup(TempString);
+			BufferPointer = add_node_end(&BufferHead, TempString);
+			CurrentArrayIndex = BufferPointer->Index;
 
 			TempStringIndex = 0;
 			free(TempString);

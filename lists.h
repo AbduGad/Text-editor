@@ -12,7 +12,7 @@
 typedef struct single_linked_list
 {
 	struct single_linked_list *Next;
-	/*int Index;*/
+	int Index;
 	int LineLen;
 	char *Str;
 } array;

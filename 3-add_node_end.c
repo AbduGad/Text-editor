@@ -36,6 +36,7 @@ array *add_node_end(array **head, const char *str)
 	if (*head == NULL)
 	{
 		*head = b;
+		b->Index = 0;
 		return (b);
 	}
 
@@ -44,7 +45,8 @@ array *add_node_end(array **head, const char *str)
 	{
 		temp = temp->Next;
 	}
-	
+
+	b->Index = temp->Index + 1;	
 	temp->Next = b;
 	return (b);
 }

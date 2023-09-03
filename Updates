@@ -5,3 +5,4 @@ Handle:
 	is there a way to read the lines on the screen as input to a buffer or the newly created file(NO)
 	need to malloc for our struct to store line length and lines to be written in the file
 	Add line counter
+	when enter is pressed lines below have to be pushed downwards
