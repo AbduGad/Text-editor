@@ -16,29 +16,35 @@ array *add_node_end(array **head, const char *str)
 	copy = strdup(str);
 	if (head == NULL)
 		return (NULL);
+
 	b = (array *)malloc(sizeof(array));
 	if (b == NULL)
 		return (NULL);
-	b->str = copy;
-	if (b->str == NULL)
+
+	b->Str = copy;
+	if (b->Str == NULL)
 	{
 		free(b);
 		return (NULL);
 	}
+
 	while (str[len])
 		len++;
-	b->next = NULL;
-	b->len = len;
+
+	b->Next = NULL;
+	b->LineLen = len;
 	if (*head == NULL)
 	{
 		*head = b;
 		return (b);
 	}
+
 	temp = *head;
-	while (temp->next != NULL)
+	while (temp->Next != NULL)
 	{
-		temp = temp->next;
+		temp = temp->Next;
 	}
-	temp->next = b;
+	
+	temp->Next = b;
 	return (b);
 }

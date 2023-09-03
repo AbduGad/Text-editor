@@ -10,6 +10,7 @@ int main(int argc, char **argv) /* ./vi ELFile */
 	char *TempString, *PrevLine, tmp[2], *Holder;
 	size_t PrevLineSize;
 	array *Buffer = NULL;
+	array *BufferPointer = NULL;
 	int CurserPosY = 0;
 
 	TempString = malloc(sizeof(char) * 128);
@@ -28,7 +29,7 @@ int main(int argc, char **argv) /* ./vi ELFile */
 	raw();
 	keypad(stdscr, TRUE);
 	noecho();
-	CreateList(&Buffer);
+	//CreateList(&Buffer);
 
 	while (ch = getch())   /* scanw("%s", ) */
 	{
@@ -104,8 +105,9 @@ int main(int argc, char **argv) /* ./vi ELFile */
 			
 		case '\n':
 			/*when thers an input of a newline we will create a new node in the list*/
-			Buffer->Str = strdup(TempString);
-			
+			// Buffer->Str = strdup(TempString);
+			BufferPointer = add_node_end(&Buffer, TempString);
+
 			TempStringIndex = 0;
 			free(TempString);
 			TempString = malloc(sizeof(char) * 128);
@@ -113,6 +115,7 @@ int main(int argc, char **argv) /* ./vi ELFile */
 				printw("Malloc fail!!!!");
 			TempString[0] = '\0';
 
+			
 			if (Currenty == WindowHieght)
 				break;
 			CurserPosY++;

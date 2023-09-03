@@ -11,7 +11,7 @@
 
 typedef struct single_linked_list
 {
-	struct array *Next;
+	struct single_linked_list *Next;
 	/*int Index;*/
 	int LineLen;
 	char *Str;
