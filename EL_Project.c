@@ -93,17 +93,16 @@ int main(int argc, char **argv) /* ./vi ELFile */
 				move(Currenty, BufferPointer->LineLen);
 				CurrentArrayIndex -= 1;
 				BufferPointer = BufferHead;
-				while (BufferPointer->Index != CurrentArrayIndex && CurrentArrayIndex >= 0)
+				while (BufferPointer->Index < CurrentArrayIndex && CurrentArrayIndex >= 0)
 				{
 					BufferPointer = BufferPointer->Next;
 				}
-				//CurrentArrayIndex = BufferPointer->Index;
 				/* Handle deleting the previous line */
 				break;
 			}
 			/*kan bymsa7 bl 3araby*/
 			move(Currenty, --Currentx);
-			//printw("\b \b");
+			/*printw("\b \b");*/
 			delch();
 			mvprintw(WindowHieght-2, WindowWidth - 30, "Curser position: %d   ", CurserPosY);
 			move(Currenty, Currentx);
@@ -111,8 +110,10 @@ int main(int argc, char **argv) /* ./vi ELFile */
 			break;
 			
 		case '\n':
+			/*when user tries to pass the maximum window height window should close and open a new one with more space*/
+
 			/*when thers an input of a newline we will create a new node in the list*/
-			// BufferHead->Str = strdup(TempString);
+			
 			BufferPointer = add_node_end(&BufferHead, TempString);
 			CurrentArrayIndex = BufferPointer->Index;
 
@@ -138,7 +139,6 @@ int main(int argc, char **argv) /* ./vi ELFile */
 			break;
 
 		default:
-			//char *c = "Life's journey is filled with surprises, embrace them all with a smile, for each moment shapes the beautiful story of your exi."
 			insch(ch);
 			TempStringIndex++;
 			if (TempStringIndex % 128 == 0) /*'\0' at 127 index*/
